@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeuCorre.Application.UseCases.Tags
+namespace MeuCorre.Domain.Interfaces.Repositories
 {
-    class InativarTagCommand
+    class ITagRepository
     {
     }
 }

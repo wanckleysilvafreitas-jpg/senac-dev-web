@@ -11,13 +11,13 @@ namespace MeuCorre.Domain.Entities
     {
         public Guid UsuarioId { get; private set; }
         public string Nome { get; private set; }
-        public string cor { get; private set; }
-
+        public string Cor { get; private set; }
+        public Usuario Usuario { get; private set; }
         public Tag(Guid usuarioId, string nome, string cor)
         {
             UsuarioId = usuarioId;
             Nome = nome. ToLower();
-            cor = cor;
+            Cor = cor;
         }    
          private void ValidarEntidadeCategoria(string cor)
         {

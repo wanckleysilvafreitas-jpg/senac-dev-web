@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeuCorre.Application.UseCases.Tags
+namespace MeuCorre.Application.UseCases.Tags.Commands
 {
      public class CriarTagcommand : IRequest<(string, bool)>
 

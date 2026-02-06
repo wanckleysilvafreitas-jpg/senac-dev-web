@@ -3,6 +3,7 @@ using MeuCorre.Application.UseCases.Categorias.Commands;
 using MeuCorre.Application.UseCases.Categorias.Dtos;
 using MeuCorre.Application.UseCases.Categorias.Queries;
 using MeuCorre.Application.UseCases.Tags;
+using MeuCorre.Application.UseCases.Tags.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeuCorre.Controllers
@@ -20,15 +21,15 @@ namespace MeuCorre.Controllers
 
 
         /// <summary>
-        /// Cria uma nova categoria para o usuário
+        /// Cria uma nova Tag para o usuário
         /// </summary>
-        /// <param name="command">Os dados da nova categoria</param>
+        /// <param name="command">Os dados da nova Tag</param>
         /// <returns>Retorna uma nova categoria criada</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(CategoriaDto), 201)]
+        [ProducesResponseType( 201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
-        public async Task<IActionResult> CriarCategoria([FromBody] CriarCategoriaCommad command)
+        public async Task<IActionResult> CriarTag([FromBody] CriarTagCommad command)
         {
             var (mensagem, sucesso) = await _mediator.Send(command);
             if (sucesso)
@@ -42,7 +43,7 @@ namespace MeuCorre.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> AtualizarCategoria([FromBody] AtualizarTagCommand command)
+        public async Task<IActionResult> AtualizarTag([FromBody] AtualizarTagCommand command)
         {
             var (mensagem, sucesso) = await _mediator.Send(command);
             if (sucesso)
@@ -56,7 +57,7 @@ namespace MeuCorre.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeletarCategoria([FromBody] DeletarTagCommad command)
+        public async Task<IActionResult> DeletarTag([FromBody] DeletarTagCommad command)
         {
             var (mensagem, sucesso) = await _mediator.Send(command);
             if (sucesso)
@@ -70,9 +71,9 @@ namespace MeuCorre.Controllers
         }
 
         [HttpPatch("ativar/{id}")]
-        public async Task<IActionResult> AtivarCategoria(Guid id)
+        public async Task<IActionResult> AtivarTag(Guid id)
         {
-            var command = new AtivarCategoriaCommand { CategoriaId = id };
+            var command = new AtivarTagCommand {Id = id };
             var (mensagem, sucesso) = await _mediator.Send(command);
             if (sucesso)
             {
@@ -86,9 +87,9 @@ namespace MeuCorre.Controllers
 
 
         [HttpPatch("inativar/{id}")]
-        public async Task<IActionResult> InativarCategoria(Guid id)
+        public async Task<IActionResult> Inativartag(Guid id)
         {
-            var command = new InativarCategoriaCommand { CategoriaId = id };
+            var command = new InativarTagCommand {Id = id };
             var (mensagem, sucesso) = await _mediator.Send(command);
             if (sucesso)
             {
@@ -102,7 +103,7 @@ namespace MeuCorre.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> ObterCategoriasPorUsuario([FromQuery] ListarTodasCategoriasQuery query)
+        public async Task<IActionResult> ObterTagPorUsuario([FromQuery] ListarTodasCategoriasQuery query)
         {
             var categorias = await _mediator.Send(query);
             return Ok(categorias);

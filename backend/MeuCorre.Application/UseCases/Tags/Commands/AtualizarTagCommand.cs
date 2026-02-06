@@ -6,23 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeuCorre.Application.UseCases.Tags
+namespace MeuCorre.Application.UseCases.Tags.Commands
 {
     public class AtualizarTagcommand : IRequest<(string, bool)>
 
     {
         [Required(ErrorMessage = "Id do usuario é obrigatorio")]
-
         public required Guid UsuarioId { get; set; }
 
+        
         [Required(ErrorMessage = "Nome é obrigatorio")]
-
         public required string Nome { get; set; }
 
+        
         [Required(ErrorMessage = "A cor é obrigatorio")]
-        []
-
-        public string cor { get; private set; }
+        public string Cor { get; private set; }
     }
     internal class AtualizarTagCommandHandler : IRequestHandler<AtualizarTagcommand, (string, bool)>
     {
@@ -30,3 +28,4 @@ namespace MeuCorre.Application.UseCases.Tags
         {
             throw new NotImplementedException();
         }
+    }

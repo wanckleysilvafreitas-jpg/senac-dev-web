@@ -1,33 +1,44 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
+using MeuCorre.Domain.Entities;
+using MeuCorre.Domain.Interfaces.Repositories;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MeuCorre.Application.UseCases.Tags.Commands
 {
-     public class CriarTagcommand : IRequest<(string, bool)>
-
+    public class CriarTagCommand : IRequest<(string, bool)>
     {
-        [Required(ErrorMessage = "Id do usuario é obrigatorio")]
-
+        [Required(ErrorMessage = "Id do usuário é obrigatório")]
         public required Guid UsuarioId { get; set; }
 
-        [Required(ErrorMessage = "Nome é obrigatorio")]
-
+        [Required(ErrorMessage = "Nome é obrigatório")]
         public required string Nome { get; set; }
 
-        [Required(ErrorMessage = "A cor é obrigatorio")]
-
-        public string cor { get; private set; }
+        [Required(ErrorMessage = "Cor é obrigatório")]
+        public required string Cor { get; set; }
     }
-    internal class CriarTagCommandHandler : IRequestHandler<CriarTagcommand, (string, bool)>
+
+    internal class CriarTagCommandHandler : IRequestHandler<CriarTagCommand, (string, bool)>
     {
-        public Task<(string, bool)> Handle(CriarTagcommand request, CancellationToken cancellationToken)
+        private readonly ITagRepository _tagRepository;
+        public CriarTagCommandHandler(ITagRepository tagRepository)
         {
-            throw new NotImplementedException();
+            _tagRepository = tagRepository;
+        }
+
+        public async Task<(string, bool)> Handle(CriarTagCommand request, CancellationToken cancellationToken)
+        {
+            var existe = await _tagRepository.NomeExisteParaUsuarioAsync(request.Nome, request.UsuarioId);
+
+            if (existe)
+            {
+                return ("Você já cadastrou uma tag com este nome", false);
+            }
+
+            var tag = new Tag(request.UsuarioId, request.Nome, request.Cor);
+
+            await _tagRepository.AdicionarAsync(tag);
+
+            return ("Tag criada com sucesso", true);
         }
     }
 }

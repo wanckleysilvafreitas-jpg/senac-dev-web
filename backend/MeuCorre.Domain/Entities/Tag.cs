@@ -16,10 +16,10 @@ namespace MeuCorre.Domain.Entities
         public Tag(Guid usuarioId, string nome, string cor)
         {
             UsuarioId = usuarioId;
-            Nome = nome. ToLower();
+            Nome = nome.ToLower();
             Cor = cor;
-        }    
-         private void ValidarEntidadeCategoria(string cor)
+        }
+        private void ValidarEntidadeCategoria(string cor)
         {
             if (string.IsNullOrEmpty(cor))
             {
@@ -33,5 +33,6 @@ namespace MeuCorre.Domain.Entities
             {
                 throw new Exception("A cor deve estar no formato hexadecimal");
             }
-
         }
+    }
+}
